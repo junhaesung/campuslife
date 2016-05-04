@@ -39,5 +39,29 @@ bool OptionScene::init()
 		origin.y + visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 
+	// 메뉴 아이템 만들기
+	auto label_menu = Label::createWithSystemFont("ToMenu", "consolas", 30.0);
+	label_menu->setTextColor(Color4B::WHITE);
+	auto item_01 = MenuItemLabel::create(label_menu, CC_CALLBACK_1(OptionScene::returnToMenuScene, this));
+
+	// 메뉴 만들기
+	auto menu = Menu::create(item_01, NULL);
+	menu->alignItemsVertically();
+	this->addChild(menu);
+
     return true;
+}
+
+void OptionScene::returnToMenuScene(Ref *sender)
+{
+	// 액션 실행
+
+	// 1.5초 후에 콜백함수 호출
+	this->scheduleOnce(schedule_selector(OptionScene::scheduleCallBackMenuScene), 0);
+}
+
+void OptionScene::scheduleCallBackMenuScene(float delta)
+{
+	// pop하고 메뉴화면으로 돌아감
+	Director::getInstance()->popScene();
 }

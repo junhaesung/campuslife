@@ -39,5 +39,26 @@ bool TimeTableScene::init()
 		origin.y + visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 
+	// 메뉴 라벨
+	auto label_01 = Label::createWithSystemFont("toComputerScene", "consolas", 30.0);
+	label_01->setTextColor(Color4B::WHITE);
+
+	// 메뉴 아이템
+	auto item_01 = MenuItemLabel::create(label_01, CC_CALLBACK_1(TimeTableScene::toComputerScene, this));
+
+	// 메뉴
+	auto menu = Menu::create(item_01, NULL);
+	menu->alignItemsVertically();
+	this->addChild(menu);
+
     return true;
+}
+
+void TimeTableScene::toComputerScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(TimeTableScene::scheduleCallBackComputerScene), 0);
+}
+void TimeTableScene::scheduleCallBackComputerScene(float delta)
+{
+	Director::getInstance()->popScene();
 }

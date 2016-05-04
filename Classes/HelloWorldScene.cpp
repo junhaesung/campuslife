@@ -1,4 +1,8 @@
 #include "HelloWorldScene.h"
+#include "RoomScene.h"
+#include "OptionScene.h"
+#include "AchievementScene.h"
+#include "OpeningScene.h"
 
 USING_NS_CC;
 
@@ -43,11 +47,6 @@ bool HelloWorld::init()
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
 
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-
     /////////////////////////////
     // 3. add your codes below...
 
@@ -80,6 +79,30 @@ bool HelloWorld::init()
 	spr_bg->setAnchorPoint(Point(0, 0));
 	this->addChild(spr_bg);
 
+	// 메뉴 라벨
+	auto label_01 = Label::createWithSystemFont("RoomScene", "consolas", 30.0);
+	label_01->setTextColor(Color4B::BLACK);
+	auto label_02 = Label::createWithSystemFont("OptionScene", "consolas", 30.0);
+	label_02->setTextColor(Color4B::BLACK);
+	auto label_03 = Label::createWithSystemFont("AchievementScene", "consolas", 30.0);
+	label_03->setTextColor(Color4B::BLACK);
+	auto label_04 = Label::createWithSystemFont("Exit", "consolas", 30.0);
+	label_04->setTextColor(Color4B::BLACK);
+	auto label_05 = Label::createWithSystemFont("OpeningScene", "consolas", 30.0);
+	label_05->setTextColor(Color4B::BLACK);
+	
+	// 메뉴 아이템
+	auto item_01 = MenuItemLabel::create(label_01, CC_CALLBACK_1(HelloWorld::loadRoomScene, this));
+	auto item_02 = MenuItemLabel::create(label_02, CC_CALLBACK_1(HelloWorld::loadOptionScene, this));
+	auto item_03 = MenuItemLabel::create(label_03, CC_CALLBACK_1(HelloWorld::loadAchievementScene, this));
+	auto item_04 = MenuItemLabel::create(label_04, CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+	auto item_05 = MenuItemLabel::create(label_05, CC_CALLBACK_1(HelloWorld::loadOpeningScene, this));
+
+	// 메뉴
+	auto menu = Menu::create(item_01,item_02, item_03, item_04, item_05, NULL);
+	menu->alignItemsVertically();
+	this->addChild(menu);
+
     return true;
 }
 
@@ -91,4 +114,42 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+void HelloWorld::loadRoomScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(HelloWorld::scheduleCallBackRoomScene), 0);
+}
+void HelloWorld::scheduleCallBackRoomScene(float delta)
+{
+	//Director::getInstance()->pushScene(OptionScene::createScene());
+	Director::getInstance()->replaceScene(RoomScene::createScene());
+}
+
+void HelloWorld::loadOptionScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(HelloWorld::scheduleCallBackOptionScene), 0);
+}
+void HelloWorld::scheduleCallBackOptionScene(float delta)
+{
+	Director::getInstance()->pushScene(OptionScene::createScene());
+	//Director::getInstance()->replaceScene(OptionScene::createScene());
+}
+
+void HelloWorld::loadAchievementScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(HelloWorld::scheduleCallBackAchievementScene), 0);
+}
+void HelloWorld::scheduleCallBackAchievementScene(float delta)
+{
+	Director::getInstance()->pushScene(AchievementScene::createScene());
+}
+
+void HelloWorld::loadOpeningScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(HelloWorld::scheduleCallBackOpeningScene), 0);
+}
+void HelloWorld::scheduleCallBackOpeningScene(float delta)
+{
+	//Director::getInstance()->pushScene(OptionScene::createScene());
+	Director::getInstance()->replaceScene(OpeningScene::createScene());
 }

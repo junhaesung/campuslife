@@ -10,6 +10,9 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
 	CREATE_FUNC(EndingDetailScene);
+
+	void returnToEndingScene(Ref *sender);
+	void scheduleCallBackEndingScene(float delta);
 };
 
 #endif // __ENDINGDETAIL_SCENE_H__

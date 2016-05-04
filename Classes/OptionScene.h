@@ -10,6 +10,9 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
     CREATE_FUNC(OptionScene);
+
+	void returnToMenuScene(Ref *sender);
+	void scheduleCallBackMenuScene(float delta);
 };
 
 #endif // __OPTION_SCENE_H__

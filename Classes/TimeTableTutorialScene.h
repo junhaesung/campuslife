@@ -10,6 +10,9 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
 	CREATE_FUNC(TimeTableTutorialScene);
+
+	void toTimeTableScene(Ref *sender);
+	void scheduleCallBackTimeTableScene(float delta);
 };
 
 #endif // __TIMETABLETUTORIAL_SCENE_H__

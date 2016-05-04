@@ -1,4 +1,6 @@
 #include "EndingScene.h"
+#include "AchievementScene.h"
+#include "EndingDetailScene.h"
 
 USING_NS_CC;
 
@@ -39,5 +41,61 @@ bool EndingScene::init()
 		origin.y + visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 
+	// 메뉴 라벨 만들기
+	auto label_01 = Label::createWithSystemFont("ToMenu", "consolas", 30.0);
+	label_01->setTextColor(Color4B::WHITE);
+	auto label_02 = Label::createWithSystemFont("ToAchievementScene", "consolas", 30.0);
+	label_02->setTextColor(Color4B::WHITE);
+	auto label_03 = Label::createWithSystemFont("ToEndingDetailScene", "consolas", 30.0);
+	label_03->setTextColor(Color4B::WHITE);
+
+	// 메뉴 아이템 만들기
+	auto item_01 = MenuItemLabel::create(label_01, CC_CALLBACK_1(EndingScene::returnToMenuScene, this));
+	auto item_02 = MenuItemLabel::create(label_02, CC_CALLBACK_1(EndingScene::replaceToAchievementScene, this));
+	auto item_03 = MenuItemLabel::create(label_03, CC_CALLBACK_1(EndingScene::pushEndingDetailScene, this));
+
+	// 메뉴 만들기
+	auto menu = Menu::create(item_01, item_02, item_03, NULL);
+	menu->alignItemsVertically();
+	this->addChild(menu);
+
     return true;
+}
+void EndingScene::returnToMenuScene(Ref *sender)
+{
+	// 액션 실행
+	// 1.5초 후에 콜백함수 호출
+	this->scheduleOnce(schedule_selector(EndingScene::scheduleCallBackMenuScene), 0);
+}
+
+void EndingScene::scheduleCallBackMenuScene(float delta)
+{
+	// pop하고 메뉴화면으로 돌아감
+	Director::getInstance()->popScene();
+}
+
+void EndingScene::replaceToAchievementScene(Ref *sender)
+{
+	// 액션 실행
+	// 1.5초 후에 콜백함수 호출
+	this->scheduleOnce(schedule_selector(EndingScene::scheduleCallBackAchievementScene), 0);
+}
+
+void EndingScene::scheduleCallBackAchievementScene(float delta)
+{
+	// Achievement scene 으로 replace
+	Director::getInstance()->replaceScene(AchievementScene::createScene());
+}
+
+void EndingScene::pushEndingDetailScene(Ref *sender)
+{
+	// 액션 실행
+	// 1.5초 후에 콜백함수 호출
+	this->scheduleOnce(schedule_selector(EndingScene::scheduleCallBackEndingDetailScene), 0);
+}
+
+void EndingScene::scheduleCallBackEndingDetailScene(float delta)
+{
+	// push EndingDetail scene 으로
+	Director::getInstance()->pushScene(EndingDetailScene::createScene());
 }

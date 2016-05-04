@@ -10,6 +10,9 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
 	CREATE_FUNC(AchieveDetailScene);
+
+	void returnToAchievementScene(Ref *sender);
+	void scheduleCallBackAchievementScene(float delta);
 };
 
 #endif // __ACHIEVEMENTDETAIL_SCENE_H__

@@ -10,6 +10,15 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
 	CREATE_FUNC(RoomScene);
+
+	void toComputerScene(Ref *sender);
+	void scheduleCallBackComputerScene(float delta);
+
+	void toClosetScene(Ref *sender);
+	void scheduleCallBackClosetScene(float delta);
+
+	void toDailyWorkScene(Ref *sender);
+	void scheduleCallBackDailyWorkScene(float delta);
 };
 
 #endif // __ROOM_SCENE_H__

@@ -1,4 +1,5 @@
 #include "OpeningScene.h"
+#include "RoomScene.h"
 
 USING_NS_CC;
 
@@ -39,5 +40,27 @@ bool OpeningScene::init()
 		origin.y + visibleSize.height - label->getContentSize().height));
 	this->addChild(label, 1);
 
+	// 메뉴 라벨
+	auto label_01 = Label::createWithSystemFont("ToRoomScene", "consolas", 30.0);
+	label_01->setTextColor(Color4B::WHITE);
+
+	// 메뉴 아이템
+	auto item_01 = MenuItemLabel::create(label_01, CC_CALLBACK_1(OpeningScene::toRoomScene, this));
+
+	// 메뉴
+	auto menu = Menu::create(item_01, NULL);
+	menu->alignItemsVertically();
+	this->addChild(menu);
+
     return true;
+}
+
+void OpeningScene::toRoomScene(Ref *sender)
+{
+	this->scheduleOnce(schedule_selector(OpeningScene::scheduleCallBackRoomScene), 0);
+}
+void OpeningScene::scheduleCallBackRoomScene(float delta)
+{
+	//Director::getInstance()->pushScene(OptionScene::createScene());
+	Director::getInstance()->replaceScene(RoomScene::createScene());
 }
